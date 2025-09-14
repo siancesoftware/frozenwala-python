@@ -1,0 +1,141 @@
+
+   {% include 'backend/influencer_header.html' %}
+   {% include 'backend/influencer_sidebar.html' %}
+
+
+ {% load static %}
+  <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper bg-gradient-primary shadow-lg rounded-3">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0"><?= $page_title;?></h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+   {% if messages %}
+  <div class="container mt-3" style="text-align:center;">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+<!--        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+    <div class="row">
+  <div class="col-md-12">
+    <div class="card bg-gradient-primary text-white shadow-lg rounded-3">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h3 class="card-title mb-0">Your Wallet Balance</h3>
+            <br>
+            <p class="mb-0 text-light">Withdraw your available funds anytime</p>
+          </div>
+          <div>
+            <i class="fas fa-wallet fa-3x text-white"></i>
+          </div>
+        </div>
+
+        <!-- Balance Display -->
+        <div class="text-center my-4">
+          <h1 class="display-3 fw-bold text-warning">₹ {{ request.user.wallet }}</h1>
+          <p class="text-light">Available Balance</p>
+        </div>
+
+        <!-- Withdraw Button -->
+        <div class="text-center">
+          <a href="{% url 'withdraw_request' %}" class="btn btn-warning btn-lg px-5 py-3 rounded-pill shadow">
+            <i class="fas fa-arrow-circle-up me-2"></i> Withdraw Wallet
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+      <!-- /.content -->
+  </div>
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('saleChart').getContext('2d');
+
+    // Extracting dates and orders from Django template variable
+    var dates = [];
+    var orders = [];
+    {% for entry in day_wise_report %}
+        dates.push("{{ entry.created_at }}");
+        orders.push({{ entry.total }}); // Corrected variable name from entry.total to entry.total_amount
+    {% endfor %}
+
+    // Create the chart with the extracted data
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: dates, // Dates as labels
+            datasets: [{
+                label: 'Total Orders',
+                backgroundColor: 'rgba(54, 162, 235, 0.5)', // Light blue background color
+                borderColor: 'white', // Dark blue border color
+                borderWidth: 1,
+                data: orders, // Total orders data
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontColor: 'white' // Set Y axis label color to white
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: 'white' // Set X axis label color to white
+                    },
+                    gridLines: {
+color: 'rgba(255, 255, 255, 0.1)' // Set grid line color to white with opacity
+                    }
+                }]
+            },
+            legend: {
+                labels: {
+                    fontColor: 'white' // Set legend label color to white
+                }
+            },
+            maintainAspectRatio: false, // Prevent the chart from being constrained to the aspect ratio
+            responsive: true, // Allow the chart to be responsive
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 10,
+                    bottom: 10
+                }
+            }
+        }
+    });
+</script>
+{% include 'backend/influencer_footer.html' %}
+

@@ -1,0 +1,104 @@
+{% include 'backend/header.html' %}
+{% include 'backend/sidebar.html' %}
+
+{% load static %}
+<style>
+    .success-message {
+        color: green;
+        font-weight: bold;
+        border: 1px solid green;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #dff0d8; /* Optional background color */
+    }
+</style>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content">
+    <br><br>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">View Influencer</h3>
+                        </div>
+                        <div class="card-body">
+                            {% if influencer %}
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label for="name">Name:</label> {{influencer.name}}
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="email">Email:</label> {{ influencer.email }}
+                                    </div>
+                                </div>
+                                <hr>
+                                <br>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label for="phone">Phone:</label> {{ influencer.phone }}
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="password">Password:</label> {{ influencer.password }}
+                                    </div>
+                                </div>
+                                <hr>
+                                <br>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label for="address">Address:</label> {{ influencer.address }}
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="type">Type:</label> {{ influencer.type }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label for="commission">Commission:</label> {{ influencer.commission }}
+                                    </div>
+                                     <div class="col-lg-6">
+                                        <label for="mk">PassBook Details:</label> {{ influencer.passbook }}
+                                    </div>
+                                </div>
+                            <div class="row">
+    <div class="col-lg-6">
+        <label for="commission">Code For App:</label>
+        <input type="text" id="appReferralCode" value="https://megasgoods.com/influencer/frzn/?influencer_code={{ influencer.code }}" readonly>
+        <button onclick="copyToClipboard('appReferralCode')">Copy</button>
+    </div>
+    <div class="col-lg-6">
+        <label for="mk">Code For Website:</label>
+        <input type="text" id="websiteReferralCode" value="https://megasgoods.com/signup?referral_code={{ influencer.code }}" readonly>
+        <button onclick="copyToClipboard('websiteReferralCode')">Copy</button>
+    </div>
+                            </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label for="code">Code:</label> {{ influencer.code }}
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <a href="{% url 'influencer_list' %}" class="btn btn-danger">Back</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+function copyToClipboard(elementId) {
+    var copyText = document.getElementById(elementId);
+    copyText.select();
+    document.execCommand("copy");
+    alert("Copied the code: " + copyText.value);
+}
+</script>
+{% include 'backend/footer.html' %}

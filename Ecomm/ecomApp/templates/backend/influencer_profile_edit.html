@@ -1,0 +1,93 @@
+{% load static %}
+{% include 'backend/influencer_header.html' %}
+{% include 'backend/influencer_sidebar.html' %}
+
+<div class="content-wrapper">
+    <!-- Content Header -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Edit Profile</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'influencer_dashboard' %}">Home</a></li>
+              <li class="breadcrumb-item active">Profile</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="card shadow p-4">
+          <h3 class="mb-4">Edit Influencer Profile</h3>
+
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="row">
+              <div class="col-md-6">
+                <!-- Name -->
+                <div class="form-group">
+                  <label for="name">Full Name</label>
+                  <input type="text" name="name" class="form-control" value="{{ influencer.name }}">
+                </div>
+
+                <!-- Phone -->
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="text" name="phone" class="form-control" value="{{ influencer.phone }}">
+                </div>
+
+                <!-- Address -->
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" name="address" class="form-control" value="{{ influencer.address }}">
+                </div>
+
+                <!-- New Password -->
+                <div class="form-group">
+                  <label for="password">New Password</label>
+                  <input type="password" name="password" class="form-control" placeholder="Leave blank to keep unchanged">
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                  <label for="confirm_password">Confirm Password</label>
+                  <input type="password" name="confirm_password" class="form-control">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <!-- Profile Photo -->
+
+                <!-- Passbook -->
+                <div class="form-group">
+                  <label for="passbook">Passbook </label>
+    <input type="text" name="passbook" class="form-control" value="{{ influencer.passbook }}">
+
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <button type="submit" class="btn btn-success">Save Changes</button>
+              <a href="{% url 'influencer_dashboard' %}" class="btn btn-secondary ml-2">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+</div>
+
+{% include 'backend/influencer_footer.html' %}

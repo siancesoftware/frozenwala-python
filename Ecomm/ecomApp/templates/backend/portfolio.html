@@ -1,0 +1,63 @@
+{% include 'backend/header.html' %}
+{% include 'backend/sidebar.html' %}
+{% load static %}
+
+<style>
+    .success-message {
+        color: green;
+        font-weight: bold;
+        border: 1px solid green;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #dff0d8;
+    }
+</style>
+
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <br><br>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card card-info shadow">
+                        <div class="card-header text-center">
+                            <h3 class="card-title w-100 text-white">Download Menu PDF by Category</h3>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="{% url 'generate_item_menu_pdf' %}">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <label for="category"><strong>Select Category:</strong></label>
+                                    <select name="category_id" id="category" class="form-control" onchange="toggleButton()">
+                                        <option value="">-- Choose Category --</option>
+                                        {% for cat in categories %}
+                                            <option value="{{ cat.id }}">{{ cat.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button id="downloadBtn" type="submit" class="btn btn-success btn-lg" disabled>
+                                        <i class="fas fa-download"></i> Download PDF
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<script>
+    function toggleButton() {
+        const category = document.getElementById('category').value;
+        document.getElementById('downloadBtn').disabled = category === '';
+    }
+</script>
+
+{% include 'backend/footer.html' %}

@@ -1,0 +1,80 @@
+
+   {% include 'backend/header.html' %}
+   {% include 'backend/sidebar.html' %}
+
+
+ {% load static %}
+  <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0"><?= $page_title;?></h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+<section class="content">
+      <div class="container-fluid">
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h3>Edit Admin Profile</h3>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Name Field -->
+            <div class="mb-3">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ user.name }}">
+            </div>
+
+            <!-- Profile Photo Field -->
+            <div class="mb-3">
+                <label for="profile_photo">Profile Photo</label>
+                <input type="file" id="profile_photo" name="profile_photo" class="form-control">
+                {% if user.profile_photo %}
+                    <img src="{{ user.profile_photo.url }}" width="120" height="120" class="mt-2" style="object-fit: cover; border-radius: 50%;">
+                {% endif %}
+            </div>
+
+            <!-- Password Field -->
+            <div class="mb-3">
+                <label for="password">New Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Leave blank if you don't want to change">
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="mb-3">
+                <label for="confirm_password">Confirm New Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirm new password">
+            </div>
+
+            <button type="submit" class="btn btn-success">Save Changes</button>
+            <a href="{% url 'backend/dashboard' %}" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>
+
+      <!-- /.content -->
+  </div>
+
+{% include 'backend/footer.html' %}
+
+  <!-- /.navbar -->

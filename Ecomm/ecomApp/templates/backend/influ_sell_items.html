@@ -1,0 +1,37 @@
+{% include 'backend/influencer_header.html' %}
+{% include 'backend/influencer_sidebar.html' %}
+{% load static %}
+
+<div class="container mt-4">
+    <h3>Order Details for {{ user_name }} on {{ date }}</h3>
+    <a href="{% url 'sell_report' %}" class="btn btn-secondary mb-3">← Back to Report</a>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Order Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.product_id.title }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.total_price }}</td>
+                    <td>{{ order.created_at|date:"d M Y h:i A" }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No orders found.</td></tr>
+            {% endfor %}
+        </tbody>
+
+
+    </table>
+</div>
+
+{% include 'backend/influencer_footer.html' %}
