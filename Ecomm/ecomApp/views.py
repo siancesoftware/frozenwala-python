@@ -753,8 +753,6 @@ from .models import Stock
 from .serializers import StockSerializer
 
 class StockListAPIView(generics.ListAPIView):
-    permission_classes = [AllowAny]
-    authentication_classes = []
 
     def get_serializer_class(self):
         return StockSerializer
